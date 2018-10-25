@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Log_in"
+            android:name=".AppHome"
             android:label="My Task"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -32,7 +32,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUp" />
         <activity
-            android:name=".AppHome"
+            android:name=".Log_in"
             android:label="@string/title_activity_app_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

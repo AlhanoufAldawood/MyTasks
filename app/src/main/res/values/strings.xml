@@ -6,8 +6,7 @@
     <string name="radio_male">Male</string>
     <string name="radio_female">Female</string>
     <string name="title_activity_app_home">AppHome</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">Parents</string>
+    <string name="tab_text_2">Children</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>

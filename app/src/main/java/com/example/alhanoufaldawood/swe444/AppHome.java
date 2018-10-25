@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class AppHome extends AppCompatActivity {
@@ -115,12 +116,25 @@ public class AppHome extends AppCompatActivity {
             return fragment;
         }
 
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_app_home, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = null;
+
+            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+
+                case 1:
+                    rootView = inflater.inflate(R.layout.activity_log_in, container, false);
+                    break;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_app_home, container, false);
+
+                    break;
+            }
+
+
+
             return rootView;
         }
     }
@@ -144,8 +158,7 @@ public class AppHome extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
     }
 }
