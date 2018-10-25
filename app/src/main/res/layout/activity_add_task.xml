@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".AddTaskActivity"
+    tools:showIn="@layout/activity_add_task"
+    android:background="@drawable/background"
+
+
+    >
+
+    <EditText
+        android:id="@+id/tasktitle"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="167dp"
+        android:layout_marginRight="167dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="Task's title:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/taskdescription"
+        android:layout_width="214dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="167dp"
+        android:layout_marginRight="167dp"
+        android:ems="10"
+        android:hint="Description:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tasktitle" />
+
+
+    <EditText
+        android:id="@+id/in_date"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:hint="Deadline date"
+        app:layout_constraintEnd_toStartOf="@+id/btn_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskdescription" />
+
+    <Button
+        android:id="@+id/btn_date"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_alignBottom="@+id/in_date"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="226dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="33dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/in_date"
+        android:layout_toRightOf="@+id/in_date"
+        android:text="SELECT DATE"
+        app:layout_constraintBottom_toTopOf="@+id/btn_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/in_date"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/in_time"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/in_date"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:hint="deadline time"
+        app:layout_constraintBottom_toTopOf="@+id/addtask"
+        app:layout_constraintEnd_toStartOf="@+id/btn_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_date" />
+
+    <Button
+        android:id="@+id/btn_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_date"
+        android:layout_alignStart="@+id/btn_date"
+        android:layout_alignLeft="@+id/btn_date"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="262dp"
+        android:text="SELECT TIME"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/in_time"
+        app:layout_constraintTop_toBottomOf="@+id/btn_date" />
+
+    <Button
+        android:id="@+id/addtask"
+        android:layout_width="91dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="145dp"
+        android:layout_marginRight="145dp"
+        android:layout_marginBottom="146dp"
+        android:text="Add task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/in_time" />
+</android.support.constraint.ConstraintLayout>
