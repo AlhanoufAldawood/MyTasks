@@ -3,6 +3,7 @@ package com.example.alhanoufaldawood.swe444;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,16 +34,24 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private int mYear, mMonth, mDay, mHour, mMinute;
 
+    static  String childId="";
+    static String childName="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+
         taskTitle = (EditText) findViewById(R.id.tasktitle);
         taskDescription = (EditText) findViewById(R.id.taskdescription);
         txtDate=(EditText)findViewById(R.id.in_date);
+        txtDate.setKeyListener(null);
+        txtDate.setBackground(null);
         txtTime=(EditText)findViewById(R.id.in_time);
+        txtTime.setKeyListener(null);
+        txtTime.setBackground(null);
 
         btnTimePicker =(Button)findViewById(R.id.btn_time);
         btnDatePicker =(Button)findViewById(R.id.btn_date);
@@ -50,15 +59,21 @@ public class AddTaskActivity extends AppCompatActivity {
 
 
 
-        Intent intent = getIntent();
 
-        String childId = intent.getStringExtra(parentHome.childId);
-        //String childName = intent.getStringExtra(parentHome.childName);
+
+
+
+
+        Intent intent = getIntent();
+        childId = intent.getStringExtra(ChildTasks.childId);
+        childName = intent.getStringExtra(ChildTasks.childName);
+        //ref= FirebaseDatabase.getInstance().getReference("tasks/"+childName);
 
         databaseTasks = FirebaseDatabase.getInstance().getReference("tasks").child(childId);
+               // databaseTasks.orderByChild("childId").equalTo(childId);
 
 
-        btnTimePicker.setOnClickListener(new View.OnClickListener() {
+                btnTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectDeadline(v);
@@ -118,10 +133,12 @@ public class AddTaskActivity extends AppCompatActivity {
 
             Task task = new Task(id,title,description,date ,time);
 
-            databaseTasks.child(id).setValue(task);
+            databaseTasks.push().setValue(task);
 
             Toast.makeText(this,"Task added" ,Toast.LENGTH_LONG).show();
-            Intent AddTask = new Intent(AddTaskActivity.this, parentHome.class);
+            Intent AddTask = new Intent(AddTaskActivity.this, ChildTasks.class);
+            AddTask.putExtra(childId,childId);
+            AddTask.putExtra(childName,childName);
             startActivity(AddTask);
 
 

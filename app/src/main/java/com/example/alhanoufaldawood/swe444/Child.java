@@ -1,5 +1,8 @@
 package com.example.alhanoufaldawood.swe444;
 
+
+import java.util.HashMap;
+
 public class Child {
 
     String id;
@@ -8,6 +11,10 @@ public class Child {
     String age;
     String user;
     String password;
+    String parentId;
+    //Task task;
+    String tasks;
+
 
     public Child(){
 
@@ -17,14 +24,28 @@ public class Child {
         return id;
     }
 
-    public Child(String id, String name, String gender, String age, String user, String password) {
+    public String getParentId() {
+        return parentId;
+    }
+
+    public String getTasks() {
+        return tasks;
+    }
+
+    public Child(String id, String name, String gender, String age, String user, String password, String parentId,String task) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.age = age;
         this.user = user;
         this.password = password;
+        this.parentId = parentId;
+        this.tasks = task;
+
+
     }
+
+
 
     public String getName() {
         return name;
