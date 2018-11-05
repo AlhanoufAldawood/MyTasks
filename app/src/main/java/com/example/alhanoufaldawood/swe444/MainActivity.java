@@ -101,17 +101,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             String id = databaseTasks.push().getKey();
+
+
             FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             String parentId =currentFirebaseUser.getUid();
 
-            Child child = new Child(id,Name,Gender,Age ,User, Password,parentId,"homework");
+            Child child = new Child(id,Name,Gender,Age ,User, Password,parentId);
 
             databaseTasks.child(id).setValue(child);
 
-            //DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-            //Query chatIdRef = rootRef.child("children").orderByChild("name").equalTo("hh");
 
 
+
+            //Toast.makeText(this,id ,Toast.LENGTH_LONG).show();
 
 
             Toast.makeText(this,"Child added" ,Toast.LENGTH_LONG).show();

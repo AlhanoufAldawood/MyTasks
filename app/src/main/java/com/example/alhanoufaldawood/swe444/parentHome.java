@@ -1,14 +1,17 @@
 package com.example.alhanoufaldawood.swe444;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,8 +30,8 @@ public class parentHome extends AppCompatActivity {
     DatabaseReference ref;
     List<Child> childrenList;
 
-    public static final String childName="";
-    public static final String childId="";
+    public static  String childName="";
+    public static  String childId="";
 
 
 
@@ -43,19 +46,13 @@ public class parentHome extends AppCompatActivity {
         childrenList = new ArrayList<>();
         listViewChild = (ListView) findViewById(R.id.listViewID);
 
-        //ref = FirebaseDatabase.getInstance().getReference("children");
-
-
-      //  FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-       // String parentId =currentFirebaseUser.getUid();
-
         ref = FirebaseDatabase.getInstance().getReference("children");
-        //ref.orderByChild("parentId").equalTo(parentId);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              // pass
                 Intent AddChild = new Intent(parentHome.this, MainActivity.class);
                 startActivity(AddChild);
             }
@@ -65,20 +62,47 @@ public class parentHome extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
                 Child child = childrenList.get(position);
-                Intent intent = new Intent(parentHome.this, ChildTasks.class);
-
-                intent.putExtra(childId, child.getId());
-                intent.putExtra(childName, child.getName());
-
-                startActivity(intent);
 
 
+               ref.orderByChild("name").equalTo(child.getName()).addValueEventListener(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(DataSnapshot dataSnapshot) {
+
+                       for (DataSnapshot childSnapShot :dataSnapshot.getChildren()){
+                          childId= childSnapShot.getKey();
+
+
+                       }
+
+                       //Toast.makeText(parentHome.this,childId ,Toast.LENGTH_LONG).show();
+
+                       Intent intent = new Intent(parentHome.this, ChildTasks.class);
+
+
+                     intent.putExtra("class", "parent");
+                       intent.putExtra(childId, childId);
+
+                       // intent.putExtra(childName, child.getName());
+
+                      startActivity(intent);
+                   }
+
+                   @Override
+                   public void onCancelled(DatabaseError databaseError) {
+
+                   }
+
+               });
             }
         });
 
 
     }
+
+
+
 
     @Override
     protected void onStart() {

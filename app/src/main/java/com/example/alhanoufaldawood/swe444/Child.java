@@ -13,26 +13,16 @@ public class Child {
     String password;
     String parentId;
     //Task task;
-    String tasks;
+    //String tasks;
 
 
     public Child(){
 
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public String getParentId() {
-        return parentId;
-    }
 
-    public String getTasks() {
-        return tasks;
-    }
-
-    public Child(String id, String name, String gender, String age, String user, String password, String parentId,String task) {
+    public Child(String id, String name, String gender, String age, String user, String password, String parentId) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -40,9 +30,16 @@ public class Child {
         this.user = user;
         this.password = password;
         this.parentId = parentId;
-        this.tasks = task;
+        //this.tasks = task;
 
 
+    }
+    public String getId() {
+        return id;
+    }
+
+    public String getParentId() {
+        return parentId;
     }
 
 

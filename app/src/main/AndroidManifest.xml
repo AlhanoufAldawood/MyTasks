@@ -28,13 +28,27 @@
         <activity
             android:name=".ChildTasks"
             android:label="@string/title_activity_child_tasks"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+</activity>
+
+    <activity android:name=".MainActivity"
             android:parentActivityName=".parentHome"
 
             />
         <activity android:name=".SignUp" />
-        <activity android:name=".UpdateChild"></activity>
+
+        <activity android:name=".UpdateChild"
+            android:parentActivityName=".ChildTasks">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ChildTasks"/>
+
+            </activity>
     </application>
 
 </manifest>
