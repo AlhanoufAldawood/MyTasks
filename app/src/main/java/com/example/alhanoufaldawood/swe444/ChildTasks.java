@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,8 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
 
     ListView listViewTasks;
     DatabaseReference ref;
+    DatabaseReference ref1;
+
     List<Task> TasksList;
 
     public static String childName="";
@@ -74,7 +77,15 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
             //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 
 
-        } else if (className.equals("AddTask")) {
+
+        } else if(className.equals("update")){
+
+            childId = intent.getStringExtra(UpdateTask.childId);
+
+        }
+
+
+        else {
 
             childId = intent.getStringExtra(AddTaskActivity.childId);
             childName = intent.getStringExtra(AddTaskActivity.childName);
@@ -118,7 +129,6 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
 
                     case R.id.edit_child:
 
-
                         Intent EditTask = new Intent(ChildTasks.this, UpdateTask.class);
                         EditTask.putExtra(childId, childId);
                         EditTask.putExtra(taskId, taskId);
@@ -156,12 +166,15 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Task view1 = ((Task) listViewTasks.getItemAtPosition(position));
+                ref1 = FirebaseDatabase.getInstance().getReference("tasks/"+childId);
 
+
+                Toast.makeText(ChildTasks.this, view1.getTitle(), Toast.LENGTH_LONG).show();
 
                 //final Task task = TasksList.get(position);
 
                 ////////
-                ref.orderByChild("taskId").equalTo(view1.getTaskId()).addValueEventListener(new ValueEventListener() {
+                ref1.orderByChild("title").equalTo(view1.getTitle()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -179,6 +192,7 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
                 view.setBackgroundColor(Color.parseColor("#B1B5BB"));
                 selectedView = view;
                 selectedPosition=position;
+               // Toast.makeText(ChildTasks.this, taskId, Toast.LENGTH_LONG).show();
 
                 return true;
 
@@ -232,6 +246,28 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
 
                 listViewTasks.setAdapter(adapter);
 
+               // Toast.makeText(ChildTasks.this, String.valueOf(listViewTasks.getAdapter().getCount()), Toast.LENGTH_LONG).show();
+
+
+               // for(int i=0 ; i<listViewTasks.getAdapter().getCount() ; i++){
+
+
+                   // if(i%2==0){
+                       // TextView view = (TextView)getViewByPosition(i,listViewTasks);
+
+                       // view.setBackgroundColor(Color.BLUE);
+
+                 //   }
+
+                  //  else{
+                     //   getViewByPosition(i,listViewTasks).setBackgroundColor(Color.YELLOW);
+
+
+                    //}
+
+
+               // }
+
 
             }
 
@@ -241,6 +277,18 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
             }
         });
 
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 
 }

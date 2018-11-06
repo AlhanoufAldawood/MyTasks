@@ -143,7 +143,7 @@
         android:layout_marginEnd="145dp"
         android:layout_marginRight="145dp"
         android:layout_marginBottom="146dp"
-        android:text="Add task"
+        android:text="update task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

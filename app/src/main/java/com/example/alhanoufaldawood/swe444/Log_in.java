@@ -39,8 +39,8 @@ public class Log_in extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-       getSupportActionBar().setTitle("Home");
-        //getActionBar().hide();
+       //getSupportActionBar().setTitle("Home");
+        getSupportActionBar().hide();
 
 
         email = (EditText) findViewById(R.id.email);
@@ -72,9 +72,15 @@ public class Log_in extends AppCompatActivity {
         String mPass = pass.getText().toString();
 
         if (TextUtils.isEmpty(mEmail) || TextUtils.isEmpty(mPass)) {
-            Toast.makeText(Log_in.this, "You must fill all", Toast.LENGTH_LONG).show();
 
+            if (TextUtils.isEmpty(mEmail) && TextUtils.isEmpty(mPass)) {
+                email.setError("Email is required");
+                pass.setError("Password is required");
+            }else if (TextUtils.isEmpty(mEmail)){
+                email.setError("Email is required");
 
+            }else
+                pass.setError("Password is required");
 
         } else {
             auth.signInWithEmailAndPassword(mEmail, mPass)

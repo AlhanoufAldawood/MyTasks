@@ -23,7 +23,9 @@
             android:name=".parentHome"
             android:label="@string/title_activity_parent_home"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".AddTaskActivity" />
+        <activity android:name=".AddTaskActivity"
+            android:parentActivityName=".ChildTasks"
+            />
         <activity
             android:name=".ChildTasks"
             android:label="@string/title_activity_child_tasks"
@@ -39,14 +41,23 @@
             android:parentActivityName=".parentHome"
 
             />
+
+
         <activity android:name=".SignUp" />
 
         <activity android:name=".UpdateChild"
+            android:parentActivityName=".parentHome">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ChildTasks"/>
+        </activity>
+
+
+        <activity android:name=".UpdateTask"
             android:parentActivityName=".ChildTasks">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ChildTasks"/>
-
             </activity>
     </application>
 

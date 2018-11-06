@@ -18,5 +18,11 @@
         tools:layout_editor_absoluteY="171dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+        android:textColor="#000"
+
+        />
 </android.support.constraint.ConstraintLayout>

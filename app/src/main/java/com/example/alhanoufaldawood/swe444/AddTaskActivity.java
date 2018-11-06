@@ -45,7 +45,11 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        getSupportActionBar().setTitle("Add New Task Child");
+        Intent intent = getIntent();
+        childId = intent.getStringExtra(ChildTasks.childId);
+        childName = intent.getStringExtra(ChildTasks.childName);
+
+        getSupportActionBar().setTitle("Add New Task for "+ childName);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
@@ -70,9 +74,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
 
 
-        Intent intent = getIntent();
-        childId = intent.getStringExtra(ChildTasks.childId);
-        childName = intent.getStringExtra(ChildTasks.childName);
+
         //ref= FirebaseDatabase.getInstance().getReference("tasks/"+childName);
 
         databaseTasks = FirebaseDatabase.getInstance().getReference("tasks").child(childId);
@@ -138,6 +140,8 @@ public class AddTaskActivity extends AppCompatActivity {
             String id = databaseTasks.push().getKey();
 
             Task task = new Task(id,title,description,date ,time);
+            Toast.makeText(AddTaskActivity.this, id, Toast.LENGTH_LONG).show();
+
 
             databaseTasks.push().setValue(task);
 

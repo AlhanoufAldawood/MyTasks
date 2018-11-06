@@ -20,9 +20,10 @@
         android:id="@+id/listViewID"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="10dp"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        tools:layout_editor_absoluteY="8dp"
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
