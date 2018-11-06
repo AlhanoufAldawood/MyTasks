@@ -22,7 +22,6 @@
         <activity
             android:name=".parentHome"
             android:label="@string/title_activity_parent_home"
-            android:parentActivityName=".Log_in"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name=".AddTaskActivity" />
         <activity

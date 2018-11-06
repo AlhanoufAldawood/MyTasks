@@ -190,46 +190,7 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
         });
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        super.onCreateOptionsMenu(menu);
 
-        getMenuInflater().inflate(R.menu.child_tasks,menu);
-
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item){
-
-
-        switch (item.getItemId()){
-
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-
-            case R.id.edit_child:
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("children").child(childId);
-                ref.removeValue();
-
-                //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
-
-              Intent EditChild = new Intent(ChildTasks.this, UpdateChild.class);
-                       EditChild.putExtra(childId, childId);
-                     EditChild.putExtra(childName, childName);
-                     startActivity(EditChild);
-
-
-
-                          return true;
-
-
-
-
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onClick(View view) {

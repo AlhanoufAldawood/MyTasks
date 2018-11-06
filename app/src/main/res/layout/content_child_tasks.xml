@@ -7,7 +7,11 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ChildTasks"
-    tools:showIn="@layout/content_child_tasks">
+    tools:showIn="@layout/content_child_tasks"
+    android:background="#EAF4FB"
+
+
+    >
 
 
     <ListView
