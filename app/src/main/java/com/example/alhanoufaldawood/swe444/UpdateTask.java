@@ -29,7 +29,7 @@ public class UpdateTask extends AppCompatActivity {
 
     private int mYear, mMonth, mDay, mHour, mMinute;
     static String taskId;
-    static String childName;
+    static String childId;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -39,8 +39,8 @@ public class UpdateTask extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-       // taskId = intent.getStringExtra(ChildTasks.taskId);
-        childName = intent.getStringExtra(ChildTasks.childName);
+        taskId = intent.getStringExtra(ChildTasks.taskId);
+        childId = intent.getStringExtra(ChildTasks.childId);
 
 
         taskTitle = (EditText) findViewById(R.id.tasktitle);
@@ -85,7 +85,7 @@ public class UpdateTask extends AppCompatActivity {
       FirebaseDatabase database = FirebaseDatabase.getInstance();
       DatabaseReference mDatabaseRef = database.getReference();
 
-      mDatabaseRef.child("children").child(childName).setValue(task);
+      mDatabaseRef.child("children").child(childId).setValue(task);
 
 
       //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();

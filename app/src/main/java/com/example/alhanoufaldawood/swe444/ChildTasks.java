@@ -2,16 +2,20 @@ package com.example.alhanoufaldawood.swe444;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +38,11 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
 
     public static String childName="";
     public static String childId="";
+    public static String taskId="";
+    private ActionMode actionMode;
+    private ActionMode.Callback callback;
+    private static View selectedView ;
+    private  static int selectedPosition;
 
 
 
@@ -44,54 +53,141 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
         setContentView(R.layout.activity_child_tasks);
 
 
-
-
         TasksList = new ArrayList<>();
         listViewTasks = (ListView) findViewById(R.id.listViewID);
-
-
-
-
 
 
         Intent intent = getIntent();
 
 
-
-       // String className = intent.getComponent().getShortClassName();
-       String className = intent.getStringExtra("class");
+        // String className = intent.getComponent().getShortClassName();
+        String className = intent.getStringExtra("class");
 
         //Toast.makeText(this,className,Toast.LENGTH_LONG).show();
 
 
-        if(className.equals("parent")) {
+        if (className.equals("parent")) {
 
-               childId = intent.getStringExtra(parentHome.childId);
-               childName = intent.getStringExtra(parentHome.childName);
+            childId = intent.getStringExtra(parentHome.childId);
+            childName = intent.getStringExtra(parentHome.childName);
 
             //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 
 
+        } else if (className.equals("AddTask")) {
+
+            childId = intent.getStringExtra(AddTaskActivity.childId);
+            childName = intent.getStringExtra(AddTaskActivity.childName);
+
         }
-
-             else if(className.equals("AddTask")){
-
-               childId = intent.getStringExtra(AddTaskActivity.childId);
-               childName = intent.getStringExtra(AddTaskActivity.childName);
-
-           }
-        getSupportActionBar().setTitle(childName+"'s page");
+        getSupportActionBar().setTitle(childName + "'s page");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
-        ref= FirebaseDatabase.getInstance().getReference("tasks/"+childId);
+        ref = FirebaseDatabase.getInstance().getReference("tasks/" + childId);
+
+
+        findViewById(R.id.fab).setOnClickListener(this);
+
+
+
+        //////////
+
+        callback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.child_context_menu,menu);
+
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case android.R.id.home:
+                        NavUtils.navigateUpFromSameTask(ChildTasks.this);
+                        break;
+
+                    case R.id.edit_child:
+
+
+                        Intent EditTask = new Intent(ChildTasks.this, UpdateTask.class);
+                        EditTask.putExtra(childId, childId);
+                        EditTask.putExtra(taskId, taskId);
+                        startActivity(EditTask);
+                        actionMode.finish();
+                        break;
+
+                    case R.id.delete_child:
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("tasks").child(childId).child(taskId);
+                        ref.removeValue();
+                        actionMode.finish();
+                        break;
+                }
 
 
 
 
-         findViewById(R.id.fab). setOnClickListener(this);
 
 
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+                selectedView.setBackgroundColor(Color.WHITE);
+
+
+            }
+        };
+        ////////
+
+        listViewTasks.setLongClickable(true);
+        listViewTasks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Task view1 = ((Task) listViewTasks.getItemAtPosition(position));
+
+
+                //final Task task = TasksList.get(position);
+
+                ////////
+                ref.orderByChild("taskId").equalTo(view1.getTaskId()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+                            taskId = childSnapShot.getKey();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+                actionMode = ChildTasks.this.startActionMode(callback);
+                view.setSelected(true);
+                view.setBackgroundColor(Color.parseColor("#B1B5BB"));
+                selectedView = view;
+                selectedPosition=position;
+
+                return true;
+
+                /////////
+
+
+            }
+
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
