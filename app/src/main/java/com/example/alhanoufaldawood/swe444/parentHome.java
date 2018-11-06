@@ -1,16 +1,26 @@
 package com.example.alhanoufaldawood.swe444;
 
 import android.content.Intent;
+import android.drm.DrmStore;
+import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +38,19 @@ public class parentHome extends AppCompatActivity {
 
     ListView listViewChild;
     DatabaseReference ref;
+
     List<Child> childrenList;
 
     public static  String childName="";
     public static  String childId="";
+    public static  String childId1="";
+
+    private ActionMode actionMode;
+    private ActionMode.Callback callback;
+    private static View selectedView ;
+    private  static int selectedPosition;
+
+
 
 
 
@@ -43,6 +62,7 @@ public class parentHome extends AppCompatActivity {
         getSupportActionBar().setTitle("Parent Home");
 
 
+
         childrenList = new ArrayList<>();
         listViewChild = (ListView) findViewById(R.id.listViewID);
 
@@ -52,7 +72,7 @@ public class parentHome extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              // pass
+                // pass
                 Intent AddChild = new Intent(parentHome.this, MainActivity.class);
                 startActivity(AddChild);
             }
@@ -66,40 +86,137 @@ public class parentHome extends AppCompatActivity {
                 Child child = childrenList.get(position);
 
 
-               ref.orderByChild("name").equalTo(child.getName()).addValueEventListener(new ValueEventListener() {
-                   @Override
-                   public void onDataChange(DataSnapshot dataSnapshot) {
+                ref.orderByChild("name").equalTo(child.getName()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                       for (DataSnapshot childSnapShot :dataSnapshot.getChildren()){
-                          childId= childSnapShot.getKey();
-
-
-                       }
-
-                       //Toast.makeText(parentHome.this,childId ,Toast.LENGTH_LONG).show();
-
-                       Intent intent = new Intent(parentHome.this, ChildTasks.class);
+                        for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+                            childId = childSnapShot.getKey();
 
 
-                     intent.putExtra("class", "parent");
-                       intent.putExtra(childId, childId);
+                        }
 
-                       // intent.putExtra(childName, child.getName());
+                        //Toast.makeText(parentHome.this,childId ,Toast.LENGTH_LONG).show();
 
-                      startActivity(intent);
-                   }
+                        Intent intent = new Intent(parentHome.this, ChildTasks.class);
 
-                   @Override
-                   public void onCancelled(DatabaseError databaseError) {
 
-                   }
+                        intent.putExtra("class", "parent");
+                        intent.putExtra(childId, childId);
 
-               });
+                        // intent.putExtra(childName, child.getName());
+
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+            }
+        });
+
+
+        callback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.child_context_menu,menu);
+
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case android.R.id.home:
+                        NavUtils.navigateUpFromSameTask(parentHome.this);
+                        break;
+
+                    case R.id.edit_child:
+
+
+
+
+                        Toast.makeText(parentHome.this,childId1 ,Toast.LENGTH_LONG).show();
+
+
+                        Intent EditChild = new Intent(parentHome.this, UpdateChild.class);
+                        EditChild.putExtra(childId, childId);
+                        EditChild.putExtra(childName, childName);
+                        startActivity(EditChild);
+                              actionMode.finish();
+                        break;
+
+                    case R.id.delete_child:
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("children").child(childId);
+                        ref.removeValue();
+                        actionMode.finish();
+                        break;
+                }
+
+
+
+
+
+
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+                selectedView.setBackgroundColor(Color.WHITE);
+
+
+            }
+        };
+
+
+        listViewChild.setLongClickable(true);
+        listViewChild.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference("children");
+                Child view1 = ((Child) listViewChild.getItemAtPosition(position));
+
+
+                ref1.orderByChild("name").equalTo(view1.getName()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot childSnapShot : dataSnapshot.getChildren()) {
+                            childId = childSnapShot.getKey();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+                actionMode = parentHome.this.startActionMode(callback);
+                view.setSelected(true);
+                view.setBackgroundColor(Color.parseColor("#B1B5BB"));
+                selectedView = view;
+                selectedPosition=position;
+
+                return true;
             }
         });
 
 
     }
+
+
+
 
 
 

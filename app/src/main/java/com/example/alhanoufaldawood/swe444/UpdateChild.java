@@ -42,8 +42,8 @@ public class UpdateChild extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-         childId = intent.getStringExtra(ChildTasks.childId);
-         childName = intent.getStringExtra(ChildTasks.childName);
+         childId = intent.getStringExtra(parentHome.childId);
+         childName = intent.getStringExtra(parentHome.childName);
 
         Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 
@@ -122,7 +122,7 @@ public class UpdateChild extends AppCompatActivity {
 
                 update(newName,Gender,newAge,newUser,newPass,parentId);
 
-                Intent updateChild = new Intent(UpdateChild.this, ChildTasks.class);
+                Intent updateChild = new Intent(UpdateChild.this, parentHome.class);
                 startActivity(updateChild);
 
             }

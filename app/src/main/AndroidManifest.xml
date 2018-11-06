@@ -28,10 +28,10 @@
         <activity
             android:name=".ChildTasks"
             android:label="@string/title_activity_child_tasks"
+            android:parentActivityName=".parentHome"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
-
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 </activity>

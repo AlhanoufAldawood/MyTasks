@@ -1,5 +1,6 @@
 package com.example.alhanoufaldawood.swe444;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -35,10 +36,14 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
     public static String childId="";
 
 
+
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_tasks);
+
+
 
 
         TasksList = new ArrayList<>();
@@ -69,16 +74,18 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
 
         }
 
-             else{
+             else if(className.equals("AddTask")){
 
                childId = intent.getStringExtra(AddTaskActivity.childId);
                childName = intent.getStringExtra(AddTaskActivity.childName);
 
            }
+        getSupportActionBar().setTitle(childName+"'s page");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
+        ref= FirebaseDatabase.getInstance().getReference("tasks/"+childId);
 
-        ref= FirebaseDatabase.getInstance().getReference("tasks/"+childName);
 
 
 
@@ -105,13 +112,18 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
                 return true;
 
             case R.id.edit_child:
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("children").child(childId);
+                ref.removeValue();
 
                 //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 
-               Intent EditChild = new Intent(ChildTasks.this, UpdateChild.class);
-                        EditChild.putExtra(childId, childId);
-                       EditChild.putExtra(childName, childName);
-                        startActivity(EditChild);
+              Intent EditChild = new Intent(ChildTasks.this, UpdateChild.class);
+                       EditChild.putExtra(childId, childId);
+                     EditChild.putExtra(childName, childName);
+                     startActivity(EditChild);
+
+
+
                           return true;
 
 

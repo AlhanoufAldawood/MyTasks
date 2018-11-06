@@ -1,5 +1,6 @@
 package com.example.alhanoufaldawood.swe444;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -38,10 +39,15 @@ public class AddTaskActivity extends AppCompatActivity {
     static String childName="";
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        getSupportActionBar().setTitle("Add New Task Child");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
 
 
         taskTitle = (EditText) findViewById(R.id.tasktitle);
@@ -137,6 +143,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
             Toast.makeText(this,"Task added" ,Toast.LENGTH_LONG).show();
             Intent AddTask = new Intent(AddTaskActivity.this, ChildTasks.class);
+            AddTask.putExtra("class", "AddTask");
             AddTask.putExtra(childId,childId);
             AddTask.putExtra(childName,childName);
             startActivity(AddTask);
