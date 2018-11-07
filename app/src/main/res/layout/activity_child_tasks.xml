@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ChildTasks"
     android:background="#EAF4FB"
+
     >
 
     <android.support.design.widget.AppBarLayout

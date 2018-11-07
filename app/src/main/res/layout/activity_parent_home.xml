@@ -7,11 +7,8 @@
     tools:context=".parentHome"
     android:background="#EAF4FB"
 
+
     >
-
-
-
-
 
 
     <include layout="@layout/content_parent_home" />

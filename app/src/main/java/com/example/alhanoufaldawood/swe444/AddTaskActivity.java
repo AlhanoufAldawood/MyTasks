@@ -204,8 +204,9 @@ public class AddTaskActivity extends AppCompatActivity {
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog cc = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
+
 
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -215,7 +216,9 @@ public class AddTaskActivity extends AppCompatActivity {
 
                         }
                     }, mYear, mMonth, mDay);
-            datePickerDialog.show();
+            cc.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+            cc.show();
         }
         if (v == btnTimePicker) {
 
