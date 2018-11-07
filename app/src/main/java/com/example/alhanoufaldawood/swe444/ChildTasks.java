@@ -89,7 +89,7 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
             childName = intent.getStringExtra(AddTaskActivity.childName);
 
         }
-        getSupportActionBar().setTitle(childName + "'s page");
+        getSupportActionBar().setTitle("Tasks page");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 

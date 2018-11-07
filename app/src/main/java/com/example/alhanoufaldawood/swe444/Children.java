@@ -44,7 +44,7 @@ public class Children extends ArrayAdapter<Child> {
 
         name.setTextSize(30);
         name.setTypeface(null,Typeface.BOLD);
-        name.setTextColor(Color.parseColor("#124699"));
+        name.setTextColor(Color.BLACK);
 
 
         //View view = getView(position, convertView, parent);
@@ -56,7 +56,6 @@ public class Children extends ArrayAdapter<Child> {
 
         else{
             listViewItem.setBackgroundColor(Color.WHITE);
-
 
         }
 

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -45,6 +46,9 @@ public class UpdateTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_task);
+
+        getSupportActionBar().setTitle("Update Task");
+
 
         Intent intent = getIntent();
 
@@ -123,6 +127,40 @@ public class UpdateTask extends AppCompatActivity {
         updateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("tasks/"+childId);
+
+
+                ref.orderByChild("taskId").equalTo(taskId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot task1 :dataSnapshot.getChildren()){
+                            Task task  = task1.getValue(Task.class);
+
+                            Toast.makeText(UpdateTask.this, "inside for", Toast.LENGTH_LONG).show();
+
+
+                            taskTitle.setText(task.getTitle());
+                            taskDescription.setText(task.getDescription());
+                            txtDate.setText(task.getDate());
+                            txtTime.setText(task.getTime());
+
+
+
+
+
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
 
                 String title = taskTitle.getText().toString().trim();
                 String description = taskDescription.getText().toString().trim();
@@ -131,10 +169,6 @@ public class UpdateTask extends AppCompatActivity {
 
                 update(title,description,date,time);
 
-                Intent updateChild = new Intent(UpdateTask.this, ChildTasks.class);
-                updateChild.putExtra("class", "update");
-                updateChild.putExtra(childId, childId);
-                startActivity(updateChild);
 
             }
         });
@@ -153,7 +187,7 @@ public class UpdateTask extends AppCompatActivity {
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog cc = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
                         @Override
@@ -164,7 +198,10 @@ public class UpdateTask extends AppCompatActivity {
 
                         }
                     }, mYear, mMonth, mDay);
-            datePickerDialog.show();
+
+            cc.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+            cc.show();
         }
         if (v == btnTimePicker) {
 
@@ -193,12 +230,55 @@ public class UpdateTask extends AppCompatActivity {
 
       Task task = new Task(taskId,title,description,date,time);
 
+      if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(date) &&  !TextUtils.isEmpty(date)) {
 
 
-      databaseTasks = FirebaseDatabase.getInstance().getReference("tasks").child(childId).child(taskId);
-      databaseTasks.setValue(task);
+          databaseTasks = FirebaseDatabase.getInstance().getReference("tasks").child(childId).child(taskId);
+          databaseTasks.setValue(task);
 
 
+          Intent updateChild = new Intent(UpdateTask.this, ChildTasks.class);
+          updateChild.putExtra("class", "update");
+          updateChild.putExtra(childId, childId);
+          startActivity(updateChild);
+
+      }else if(TextUtils.isEmpty(title) && TextUtils.isEmpty(date) && TextUtils.isEmpty(time)){
+          taskTitle.setError("Title is required");
+          txtDate.setError("Date is required");
+          txtTime.setError("Time is required");
+          return false;
+
+      }else if(TextUtils.isEmpty(time)) {
+          txtTime.setError("Time is required");
+          return false;}
+
+      else if(TextUtils.isEmpty(date)) {
+          txtDate.setError("Date is required");
+          return false;
+
+
+
+      }else if(TextUtils.isEmpty(title) && TextUtils.isEmpty(date)){
+          taskTitle.setError("Title is required");
+          txtDate.setError("Date is required");
+          return false;
+
+      }else if(TextUtils.isEmpty(date) && TextUtils.isEmpty(time)){
+          taskTitle.setError("Title is required");
+          txtTime.setError("Time is required");
+          return false;
+
+      }else if(TextUtils.isEmpty(title) && TextUtils.isEmpty(time)){
+          txtDate.setError("Date is required");
+          txtTime.setError("Time is required");
+          return false;
+
+      }else if(TextUtils.isEmpty(title) ){
+          taskTitle.setError("Title is required");
+          return false;
+
+
+      }
 
       //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 

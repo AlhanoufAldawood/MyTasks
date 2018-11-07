@@ -40,6 +40,8 @@ public class UpdateChild extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_child);
 
+        getSupportActionBar().setTitle("Update Child information");
+
         Intent intent = getIntent();
 
          childId = intent.getStringExtra(parentHome.childId);
