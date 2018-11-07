@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".TaskList"
-    tools:showIn="@layout/task_list">
+    tools:showIn="@layout/task_list"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/titleText"
@@ -21,7 +23,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="25dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-
         android:textColor="#000"
 
         />

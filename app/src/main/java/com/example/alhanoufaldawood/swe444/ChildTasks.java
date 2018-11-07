@@ -76,8 +76,6 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
 
             //Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 
-
-
         } else if(className.equals("update")){
 
             childId = intent.getStringExtra(UpdateTask.childId);

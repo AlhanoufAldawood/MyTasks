@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.support.design.internal.NavigationMenuView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,21 @@ public class TaskList extends ArrayAdapter<Task>{
         name.setTextSize(30);
         name.setTypeface(null,Typeface.BOLD);
         name.setTextColor(Color.parseColor("#124699"));
+
+
+        //View view = getView(position, convertView, parent);
+
+        if(position %2 ==0){
+            listViewItem.setBackgroundColor(Color.WHITE);
+
+        }
+
+        else{
+            listViewItem.setBackgroundColor(Color.WHITE);
+
+
+        }
+
 
 
         return listViewItem;
