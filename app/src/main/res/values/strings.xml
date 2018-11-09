@@ -9,4 +9,6 @@
     <string name="tab_text_1">Parents</string>
     <string name="tab_text_2">Children</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="deadline_time">deadline time</string>
+    <string name="deadline_date">Deadline date</string>
 </resources>

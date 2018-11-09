@@ -1,13 +1,16 @@
 package com.example.alhanoufaldawood.swe444;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -42,12 +45,15 @@ public class UpdateTask extends AppCompatActivity {
     static String childId;
 
 
+    @SuppressLint("RestrictedApi")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_task);
 
         getSupportActionBar().setTitle("Update Task");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
 
 
         Intent intent = getIntent();
@@ -84,7 +90,6 @@ public class UpdateTask extends AppCompatActivity {
                 for (DataSnapshot task1 :dataSnapshot.getChildren()){
                     Task task  = task1.getValue(Task.class);
 
-                    Toast.makeText(UpdateTask.this, "inside for", Toast.LENGTH_LONG).show();
 
 
                     taskTitle.setText(task.getTitle());
@@ -137,7 +142,6 @@ public class UpdateTask extends AppCompatActivity {
                         for (DataSnapshot task1 :dataSnapshot.getChildren()){
                             Task task  = task1.getValue(Task.class);
 
-                            Toast.makeText(UpdateTask.this, "inside for", Toast.LENGTH_LONG).show();
 
 
                             taskTitle.setText(task.getTitle());
@@ -288,6 +292,21 @@ public class UpdateTask extends AppCompatActivity {
       return true;
 
   }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.homeAsUp){
+            Intent updateChild = new Intent(UpdateTask.this, ChildTasks.class);
+            updateChild.putExtra("class", "update");
+            updateChild.putExtra(childId, childId);
+            startActivity(updateChild);
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }

@@ -46,16 +46,21 @@ public class Children extends ArrayAdapter<Child> {
         name.setTypeface(null,Typeface.BOLD);
         name.setTextColor(Color.BLACK);
 
-
         //View view = getView(position, convertView, parent);
 
-        if(position %2 ==0){
-            listViewItem.setBackgroundColor(Color.WHITE);
+        if(position %4 == 0){
+            listViewItem.setBackgroundResource(R.drawable.child_list);
 
         }
 
-        else{
-            listViewItem.setBackgroundColor(Color.WHITE);
+        else if (position%4 ==1){
+            listViewItem.setBackgroundResource(R.drawable.child_list2);
+
+        }else if (position%4 == 2){
+            listViewItem.setBackgroundResource(R.drawable.child_list3);
+
+        }else if (position %4== 3){
+            listViewItem.setBackgroundResource(R.drawable.child_list4);
 
         }
 

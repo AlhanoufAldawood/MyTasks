@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".parentHome"
-    android:background="#EAF4FB"
-
-
+    android:background="#ffff"
     >
 
 
     <include layout="@layout/content_parent_home" />
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigationBottom"
+        />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigationBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation"
+        android:background="@drawable/bottom"
+        />
 
     <ListView
         android:id="@+id/listViewID"
@@ -20,12 +34,12 @@
         android:layout_marginTop="10dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
-
         android:divider="@null"
         android:dividerHeight="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="15dp"
+
         />
 
     <android.support.design.widget.FloatingActionButton
@@ -36,4 +50,4 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -63,6 +63,8 @@ public class parentHome extends AppCompatActivity {
 
 
 
+
+
         childrenList = new ArrayList<>();
         listViewChild = (ListView) findViewById(R.id.listViewID);
 
@@ -147,7 +149,6 @@ public class parentHome extends AppCompatActivity {
 
 
 
-                        Toast.makeText(parentHome.this,childId1 ,Toast.LENGTH_LONG).show();
 
 
                         Intent EditChild = new Intent(parentHome.this, UpdateChild.class);
@@ -175,7 +176,6 @@ public class parentHome extends AppCompatActivity {
             @Override
             public void onDestroyActionMode(ActionMode mode) {
 
-                selectedView.setBackgroundColor(Color.WHITE);
 
 
             }
@@ -204,7 +204,6 @@ public class parentHome extends AppCompatActivity {
 
                 actionMode = parentHome.this.startActionMode(callback);
                 view.setSelected(true);
-                view.setBackgroundColor(Color.parseColor("#B1B5BB"));
                 selectedView = view;
                 selectedPosition=position;
 
@@ -216,9 +215,24 @@ public class parentHome extends AppCompatActivity {
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.child_tasks, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int id = item.getItemId();
 
+        if (id == R.id.edit_child){
+
+            Intent intent = new Intent(parentHome.this, Log_in.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

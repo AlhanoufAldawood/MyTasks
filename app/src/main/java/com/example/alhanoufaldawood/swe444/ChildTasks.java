@@ -66,7 +66,6 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
         // String className = intent.getComponent().getShortClassName();
         String className = intent.getStringExtra("class");
 
-        //Toast.makeText(this,className,Toast.LENGTH_LONG).show();
 
 
         if (className.equals("parent")) {
@@ -167,7 +166,6 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
                 ref1 = FirebaseDatabase.getInstance().getReference("tasks/"+childId);
 
 
-                Toast.makeText(ChildTasks.this, view1.getTitle(), Toast.LENGTH_LONG).show();
 
                 //final Task task = TasksList.get(position);
 
@@ -208,7 +206,6 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                Toast.makeText(this,childId ,Toast.LENGTH_LONG).show(); // طلع الاسم
                 Intent AddChild = new Intent(ChildTasks.this, AddTaskActivity.class);
                       AddChild.putExtra(childId, childId);
                       AddChild.putExtra(childName, childName);

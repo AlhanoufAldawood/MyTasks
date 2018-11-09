@@ -43,13 +43,13 @@ public class AddTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task);
+        setContentView(R.layout.add_task);
 
         Intent intent = getIntent();
         childId = intent.getStringExtra(ChildTasks.childId);
         childName = intent.getStringExtra(ChildTasks.childName);
 
-        getSupportActionBar().setTitle("Add New Task for "+ childName);
+        getSupportActionBar().setTitle("Add New Task for ");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
