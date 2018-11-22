@@ -11,4 +11,10 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="deadline_time">deadline time</string>
     <string name="deadline_date">Deadline date</string>
+    <string name="task_s_title">Task\'s title:</string>
+    <string name="description">Description:</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>

@@ -4,11 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,11 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,6 +84,8 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
         }
         getSupportActionBar().setTitle("Tasks page");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
+        Toast.makeText(this,childId ,Toast.LENGTH_LONG).show();
 
 
         ref = FirebaseDatabase.getInstance().getReference("tasks/" + childId);
@@ -226,13 +222,16 @@ public class ChildTasks extends AppCompatActivity implements OnClickListener{
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Toast.makeText(ChildTasks.this, "hello", Toast.LENGTH_LONG).show();
 
                 TasksList.clear();
 
 
                 for (DataSnapshot childSnapShot :dataSnapshot.getChildren()){
 
+
                     Task task=childSnapShot.getValue(Task.class);
+
                     TasksList.add(task);
 
                 }

@@ -15,12 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -297,16 +293,27 @@ public class UpdateTask extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.homeAsUp){
+         if (id == android.R.id.home) {
             Intent updateChild = new Intent(UpdateTask.this, ChildTasks.class);
             updateChild.putExtra("class", "update");
             updateChild.putExtra(childId, childId);
             startActivity(updateChild);
-            NavUtils.navigateUpFromSameTask(this);
+           // NavUtils.navigateUpFromSameTask(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    @Override
+    public void onBackPressed() {
+
+        Intent updateChild = new Intent(UpdateTask.this, ChildTasks.class);
+        updateChild.putExtra("class", "update");
+        updateChild.putExtra(childId, childId);
+        startActivity(updateChild);
+        //NavUtils.navigateUpFromSameTask(this);
+
+        super.onBackPressed();
+    }
 }

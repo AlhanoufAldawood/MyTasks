@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".parentHome"
-    android:background="#ffff"
-    >
-
-
-    <include layout="@layout/content_parent_home" />
+    android:background="#fff"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
 
 
     <ListView
-        android:id="@+id/listViewID"
+        android:id="@+id/listViewChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="0dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         android:divider="@null"
-        android:dividerHeight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:dividerHeight="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="0dp"
 
         />
 
 
 
 </RelativeLayout>
+
+

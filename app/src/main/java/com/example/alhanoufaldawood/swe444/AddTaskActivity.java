@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.SearchRecentSuggestionsProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -58,10 +57,8 @@ public class AddTaskActivity extends AppCompatActivity {
         taskDescription = (EditText) findViewById(R.id.taskdescription);
         txtDate=(EditText)findViewById(R.id.in_date);
         txtDate.setKeyListener(null);
-        txtDate.setBackground(null);
         txtTime=(EditText)findViewById(R.id.in_time);
         txtTime.setKeyListener(null);
-        txtTime.setBackground(null);
 
         btnTimePicker =(Button)findViewById(R.id.btn_time);
         btnDatePicker =(Button)findViewById(R.id.btn_date);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alhanoufaldawood.swe444"
     android:compileSdkVersion="16">
 
@@ -9,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".Log_in"
             android:label="My Task"
@@ -21,45 +23,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".parentHome"
+            android:name=".ParentFragment"
             android:label="@string/title_activity_parent_home"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".AddTaskActivity"
-            android:parentActivityName=".ChildTasks"
-            />
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AddTaskActivity"
+            android:parentActivityName=".ChildTasks" />
         <activity
             android:name=".ChildTasks"
             android:label="@string/title_activity_child_tasks"
-            android:parentActivityName=".parentHome"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-</activity>
+            android:parentActivityName=".ParentFragment"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <activity android:name=".MainActivity"
-            android:parentActivityName=".parentHome"
-
-            />
-
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:parentActivityName=".ParentFragment" />
+        <activity android:name=".ChildHome" />
         <activity android:name=".SignUp" />
-
-        <activity android:name=".UpdateChild"
-            android:parentActivityName=".parentHome">
+        <activity
+            android:name=".UpdateChild"
+            android:parentActivityName=".ParentFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ChildTasks"/>
+                android:value=".ChildTasks" />
         </activity>
-
-
-        <activity android:name=".UpdateTask"
+        <activity
+            android:name=".UpdateTask"
             android:parentActivityName=".ChildTasks">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ChildTasks"/>
-            </activity>
+                android:value=".ChildTasks" />
+        </activity>
+        <activity android:name=".ForgetPass" />
+        <activity android:name=".Adapter.ChildrenChatList" />
+
+        <activity android:name=".ChattingActivity"
+            android:parentActivityName=".ParentFragment"
+            />
     </application>
 
 </manifest>

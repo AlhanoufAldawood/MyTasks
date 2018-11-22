@@ -1,41 +1,30 @@
 package com.example.alhanoufaldawood.swe444;
 
 import android.annotation.SuppressLint;
-import android.graphics.RadialGradient;
 import android.os.Bundle;
 import android.content.Intent;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.alhanoufaldawood.swe444.Model.Child;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+        private FirebaseAuth mAuth,CRef;
 
 
         EditText name;
@@ -53,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
+            mAuth = FirebaseAuth.getInstance();
+            CRef=FirebaseAuth.getInstance();
 
             getSupportActionBar().setTitle("Add New Child");
             getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
@@ -106,9 +97,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             String parentId =currentFirebaseUser.getUid();
 
-            Child child = new Child(id,Name,Gender,Age ,User, Password,parentId);
+            final Child child = new Child(id,Name,Gender,Age ,User, Password,parentId);
 
             databaseTasks.child(id).setValue(child);
+
+            /////////////////
+
+            com.google.android.gms.tasks.Task<AuthResult> authResultTask =mAuth.createUserWithEmailAndPassword(User,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull com.google.android.gms.tasks.Task<AuthResult> task) {
+
+                    if (task.isSuccessful()) {
+                        String Gender = "";
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String userId = user.getUid();
+                        DatabaseReference mRef = database.getReference().child("user").child(userId);
+
+                        mRef.child("userID").setValue(userId);
+                        mRef.child("Type").setValue("child");
+
+
+
+                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(MainActivity.this, "Successfuly add child", Toast.LENGTH_SHORT);
+                                Intent start = new Intent(MainActivity.this, ParentFragment.class);
+                            }
+                        });
+                    }
+                }
+            });
+
+//////////////////////////
 
 
 
@@ -117,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             Toast.makeText(this,"Child added" ,Toast.LENGTH_LONG).show();
-            Intent AddChild = new Intent(MainActivity.this, parentHome.class);
+            Intent AddChild = new Intent(MainActivity.this, ParentFragment.class);
             startActivity(AddChild);
 
         } else if (TextUtils.isEmpty(Name) && TextUtils.isEmpty(User) && TextUtils.isEmpty(Password)){

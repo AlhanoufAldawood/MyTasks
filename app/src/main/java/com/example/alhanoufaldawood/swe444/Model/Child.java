@@ -1,4 +1,4 @@
-package com.example.alhanoufaldawood.swe444;
+package com.example.alhanoufaldawood.swe444.Model;
 
 
 import java.util.HashMap;

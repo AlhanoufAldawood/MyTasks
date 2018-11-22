@@ -1,12 +1,8 @@
 package com.example.alhanoufaldawood.swe444;
 
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.alhanoufaldawood.swe444.Model.Child;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -128,7 +125,7 @@ public class UpdateChild extends AppCompatActivity {
 
                 update(newName,Gender,newAge,newUser,newPass,parentId);
 
-                Intent updateChild = new Intent(UpdateChild.this, parentHome.class);
+                Intent updateChild = new Intent(UpdateChild.this, ParentFragment.class);
                 startActivity(updateChild);
 
             }
